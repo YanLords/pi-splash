@@ -1,0 +1,9 @@
+#!/bin/bash
+# pi - Wrapper personnalisé pour Pi Agent avec animation de logo
+# Ce script est une surcouche de ~/bin/pi-animated
+
+# Chemin vers le wrapper principal
+PI_ANIMATED="$HOME/bin/pi-animated"
+
+# Lancer le wrapper principal qui joue l'animation puis lance le vrai Pi Agent
+"$PI_ANIMATED" "$@"

@@ -1,0 +1,35 @@
+#!/bin/bash
+# pi-animated - Wrapper pour Pi Agent qui affiche une animation ASCII du logo π avant le lancement
+#
+# Ce script joue une animation ASCII/ANSI simple, puis lance le vrai Pi Agent.
+# Il transmet tous les arguments au vrai `pi` pour une compatibilité totale.
+
+# Chemin vers le vrai binaire Pi Agent
+PI_BIN="/opt/homebrew/bin/pi"
+
+# Chemin vers le script d'animation
+PI_LOGO_SCRIPT="$HOME/bin/pi-logo.sh"
+
+# Vérifier que le vrai binaire existe
+if [ ! -f "$PI_BIN" ]; then
+    echo "Erreur: Le binaire Pi Agent n'est pas trouvé à $PI_BIN" >&2
+    echo "Veuillez installer Pi Agent via: npm install -g @earendil-works/pi-coding-agent" >&2
+    exit 1
+fi
+
+# Vérifier que le script d'animation existe
+if [ ! -f "$PI_LOGO_SCRIPT" ]; then
+    echo "Erreur: Le script d'animation $PI_LOGO_SCRIPT n'existe pas" >&2
+    exit 1
+fi
+
+# Jouer l'animation du logo
+"$PI_LOGO_SCRIPT"
+
+# Une fois l'animation terminée, lancer le vrai Pi Agent avec tous les arguments
+# Le vrai `pi` prendra le contrôle du terminal et affichera son propre logo
+"$PI_BIN" "$@"
+
+# Capturer le code de sortie du vrai `pi` et le retourner
+PI_EXIT_CODE=$?
+exit $PI_EXIT_CODE
